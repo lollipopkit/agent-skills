@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maintain Linked Docs"
+  short_description: "Maintain growing wiki and ADR libraries"
+  default_prompt: "Use $maintain-linked-doc-library to maintain a linked wiki or ADR knowledge base for this project."

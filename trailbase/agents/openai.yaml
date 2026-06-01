@@ -1,0 +1,4 @@
+interface:
+  display_name: "TrailBase"
+  short_description: "TrailBase install, config, APIs, SDKs"
+  default_prompt: "Use $trailbase to install, configure, or integrate TrailBase APIs and SDKs."

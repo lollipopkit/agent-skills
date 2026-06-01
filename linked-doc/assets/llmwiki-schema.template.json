@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "defaultKind": "concept",
+  "kinds": {
+    "concept": {
+      "minWikilinks": 0,
+      "description": "A standalone project idea, pattern, implementation detail, or decision topic."
+    },
+    "entity": {
+      "minWikilinks": 1,
+      "description": "A concrete component, service, package, API, person, team, or artifact."
+    },
+    "comparison": {
+      "minWikilinks": 2,
+      "description": "A side-by-side analysis of alternatives, designs, tools, or approaches."
+    },
+    "overview": {
+      "minWikilinks": 3,
+      "description": "A map page that orients readers across related decisions, components, or concepts."
+    }
+  },
+  "seedPages": [
+    {
+      "title": "Project ADR Index",
+      "kind": "overview",
+      "summary": "Map of active, superseded, and related architectural decisions."
+    }
+  ]
+}

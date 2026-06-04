@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Clean History"
+  short_description: "Clean Codex logs and prompt history"
+  default_prompt: "Use $codex-clean-history to preview and clean Codex logs, sessions, and input history while preserving memories."

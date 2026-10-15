@@ -1,0 +1,4 @@
+interface:
+  display_name: "GlitchTip API"
+  short_description: "Filter events, sweep and resolve GlitchTip issues"
+  default_prompt: "Use $glitchtip-api to find which releases still hit an issue, pull a release's stack, or resolve issues in a release."

@@ -15,10 +15,10 @@ export GLITCHTIP_ORG=my-org
 export GLITCHTIP_PROJECT=my-project                  # optional
 ```
 
-The token is read from `GLITCHTIP_TOKEN`, or else from the OS keychain (macOS `security`, Linux `secret-tool`) under service `GLITCHTIP_KEYCHAIN_SERVICE` (default: the URL's host) and account `GLITCHTIP_KEYCHAIN_ACCOUNT` (default: `glitchtip`). Never print a token, put one on a command line, or paste one into the conversation. To store one from the clipboard without echoing it (macOS):
+The token is read from `GLITCHTIP_TOKEN`, or else from 1Password when `GLITCHTIP_OP_REF` holds a secret reference (`op://vault/item/password`, read with the `op` CLI, which asks to authorize the run), or else from the OS keychain (macOS `security`, Linux `secret-tool`) under service `GLITCHTIP_KEYCHAIN_SERVICE` (default: the URL's host) and account `GLITCHTIP_KEYCHAIN_ACCOUNT` (default: `glitchtip`). Never print a token, put one on a command line, or paste one into the conversation. To store one in the keychain (macOS), `-w` without a value prompts for it, so the token is never on a command line:
 
 ```bash
-t=$(pbpaste | tr -d '[:space:]'); security add-generic-password -U -a glitchtip -s glitchtip.example.com -w "$t"; unset t; printf '' | pbcopy
+security add-generic-password -U -a glitchtip -s glitchtip.example.com -w
 ```
 
 A token needs `event:read` to read; resolving needs write scope.

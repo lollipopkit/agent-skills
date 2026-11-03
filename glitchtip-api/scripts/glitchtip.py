@@ -9,7 +9,8 @@ Configuration (environment):
   GLITCHTIP_URL                 base URL, e.g. https://glitchtip.example.com
   GLITCHTIP_ORG                 organization slug (issues, sweep)
   GLITCHTIP_PROJECT             project slug (optional; narrows issues/sweep)
-  GLITCHTIP_TOKEN               API token; if unset, read from the OS keychain:
+  GLITCHTIP_TOKEN               API token; if unset, from GLITCHTIP_OP_REF, else the OS keychain:
+  GLITCHTIP_OP_REF              1Password secret reference (op://vault/item/field), read with `op`
   GLITCHTIP_KEYCHAIN_SERVICE    keychain service (default: the URL's host)
   GLITCHTIP_KEYCHAIN_ACCOUNT    keychain account (default: glitchtip)
 
@@ -63,6 +64,17 @@ def token() -> str:
     if env:
         _token = env.strip()
         return _token
+    ref = os.environ.get("GLITCHTIP_OP_REF")
+    if ref:
+        try:
+            out = subprocess.run(["op", "read", "--no-newline", ref], capture_output=True, text=True, check=True)
+        except (OSError, subprocess.CalledProcessError) as e:
+            detail = getattr(e, "stderr", None) or str(e)
+            die(f"no token from 1Password ({ref}): {detail.strip()}")
+        _token = out.stdout.strip()
+        if not _token:
+            die(f"no token from 1Password ({ref}): the field is empty")
+        return _token
     service = os.environ.get(
         "GLITCHTIP_KEYCHAIN_SERVICE", urllib.parse.urlparse(base_url()).hostname
     )
@@ -75,7 +87,7 @@ def token() -> str:
         out = subprocess.run(cmd, capture_output=True, text=True, check=True)
     except (OSError, subprocess.CalledProcessError):
         die(
-            f"no token: set GLITCHTIP_TOKEN or store one in the keychain "
+            f"no token: set GLITCHTIP_TOKEN or GLITCHTIP_OP_REF, or store one in the keychain "
             f"(service={service}, account={account})"
         )
     _token = out.stdout.strip()
